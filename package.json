@@ -1,0 +1,59 @@
+{
+  "name": "expo-dropdown-select-list",
+  "version": "1.0.0",
+  "description": "⭐ React Native Select List Equivalent to Html's Select with options\"",
+  "main": "index.ts",
+  "types": "index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MontebellerZ/expo-multi-dropdown-select-list.git"
+  },
+  "keywords": [
+    "React",
+    "React-Native",
+    "Expo",
+    "Dropdown",
+    "List",
+    "Select",
+    "Multiple",
+    "Modal",
+    "picker",
+    "select",
+    "dropdown",
+    "android",
+    "ios",
+    "selectlist",
+    "searchable",
+    "list",
+    "dropdown-picker",
+    "react",
+    "react native",
+    "react-native",
+    "reactnative",
+    "selectlist",
+    "expo",
+    "easy",
+    "menu",
+    "tag",
+    "chooser",
+    "multiple",
+    "multi"
+  ],
+  "devDependencies": {
+    "@types/react": "^18.0.25",
+    "@types/react-native": "^0.70.6",
+    "react": "^18.2.0",
+    "react-native": "0.68.2",
+    "typescript": "^4.8.4",
+    "react-dom": "^18.2.0"
+  },
+  "author": "MontebellerZ",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MontebellerZ/expo-multi-dropdown-select-list/issues"
+  },
+  "homepage": "https://github.com/MontebellerZ/expo-multi-dropdown-select-list#readme"
+}
