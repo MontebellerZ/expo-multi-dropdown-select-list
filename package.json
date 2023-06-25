@@ -1,6 +1,6 @@
 {
   "name": "expo-dropdown-select-list",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "⭐ React Native Select List Equivalent to Html's Select with options\"",
   "main": "index.ts",
   "types": "index.d.ts",

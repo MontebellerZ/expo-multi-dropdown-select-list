@@ -319,6 +319,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "#000",
         borderRadius: 16,
+        gap: 10,
     },
     closeBtn: {
         backgroundColor: "#424242",
