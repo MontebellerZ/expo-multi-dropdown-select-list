@@ -120,7 +120,7 @@ export interface SelectListProps {
     /**
      * Defines if the component should be nested in a React Native Modal
      */
-    isModal?: Boolean;
+    isModal?: boolean;
 
     /**
      * Additional styles for Modal view
@@ -128,9 +128,19 @@ export interface SelectListProps {
     modalStyles?: ViewStyle;
 
     /**
+     * Changes visibility of the Modal
+     */
+    modalVisible?: boolean;
+
+    /**
+     * Called when Modal is requested to close
+     */
+    onModalClose?: () => {};
+
+    /**
      * Display this text on close button
      */
-    closeText?: String;
+    closeText?: string;
 }
 
 export interface MultipleSelectListProps {
@@ -282,7 +292,7 @@ export interface MultipleSelectListProps {
     /**
      * Defines if the component should be nested in a React Native Modal
      */
-    isModal?: Boolean;
+    isModal?: boolean;
 
     /**
      * Additional styles for Modal view
@@ -290,9 +300,19 @@ export interface MultipleSelectListProps {
     modalStyles?: ViewStyle;
 
     /**
+     * Changes visibility of the Modal
+     */
+    modalVisible?: boolean;
+
+    /**
+     * Called when Modal is requested to close
+     */
+    onModalClose?: () => {};
+
+    /**
      * Display this text on close button
      */
-    closeText?: String;
+    closeText?: string;
 }
 
 declare class MultipleSelectList extends React.Component<MultipleSelectListProps> {}

@@ -48,6 +48,8 @@ const MultipleSelectList: React.FC<MultipleSelectListProps> = ({
     dropdownShown = false,
     isModal = false,
     modalStyles = {},
+    modalVisible = false,
+    onModalClose = () => {},
     closeText = "Close",
 }) => {
     const oldOption = React.useRef(null);
@@ -57,7 +59,6 @@ const MultipleSelectList: React.FC<MultipleSelectListProps> = ({
     const [height, setHeight] = React.useState<number>(350);
     const animatedvalue = React.useRef(new Animated.Value(0)).current;
     const [filtereddata, setFilteredData] = React.useState(data);
-    const [showModal, setShowModal] = React.useState(false);
 
     const slidedown = () => {
         setDropdown(true);
@@ -450,18 +451,15 @@ const MultipleSelectList: React.FC<MultipleSelectListProps> = ({
         <Modal
             animationType={"fade"}
             transparent={true}
-            visible={showModal}
+            visible={modalVisible}
             hardwareAccelerated={true}
-            onRequestClose={() => setShowModal(false)}
+            onRequestClose={onModalClose}
         >
             <View style={styles.modalStylesExternal}>
                 <View style={[styles.modalStyles, modalStyles]}>
                     {defaultComponent}
 
-                    <TouchableOpacity
-                        onPress={() => setShowModal(false)}
-                        style={{ alignSelf: "center" }}
-                    >
+                    <TouchableOpacity onPress={onModalClose} style={{ alignSelf: "center" }}>
                         <Text style={[{ fontFamily }, styles.closeBtn]}>{closeText}</Text>
                     </TouchableOpacity>
                 </View>
