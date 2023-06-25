@@ -10,6 +10,7 @@ import {
     TextInput,
     ViewStyle,
     Pressable,
+    Modal,
 } from "react-native";
 
 import { MultipleSelectListProps } from "..";
@@ -27,6 +28,7 @@ const MultipleSelectList: React.FC<MultipleSelectListProps> = ({
     dropdownTextStyles,
     maxHeight,
     data,
+    defaultSelect = [],
     searchicon = false,
     arrowicon = false,
     closeicon = false,
@@ -44,14 +46,18 @@ const MultipleSelectList: React.FC<MultipleSelectListProps> = ({
     checkBoxStyles,
     save = "key",
     dropdownShown = false,
+    isModal = false,
+    modalStyles = {},
+    closeText = "Close",
 }) => {
     const oldOption = React.useRef(null);
     const [_firstRender, _setFirstRender] = React.useState<boolean>(true);
     const [dropdown, setDropdown] = React.useState<boolean>(dropdownShown);
-    const [selectedval, setSelectedVal] = React.useState<any>([]);
+    const [selectedval, setSelectedVal] = React.useState<any>(defaultSelect ?? []);
     const [height, setHeight] = React.useState<number>(350);
     const animatedvalue = React.useRef(new Animated.Value(0)).current;
     const [filtereddata, setFilteredData] = React.useState(data);
+    const [showModal, setShowModal] = React.useState(false);
 
     const slidedown = () => {
         setDropdown(true);
@@ -93,7 +99,7 @@ const MultipleSelectList: React.FC<MultipleSelectListProps> = ({
         }
     }, [dropdownShown]);
 
-    return (
+    const defaultComponent = (
         <View>
             {dropdown && search ? (
                 <View style={[styles.wrapper, boxStyles]}>
@@ -437,6 +443,31 @@ const MultipleSelectList: React.FC<MultipleSelectListProps> = ({
             ) : null}
         </View>
     );
+
+    if (!isModal) return defaultComponent;
+
+    return (
+        <Modal
+            animationType={"fade"}
+            transparent={true}
+            visible={showModal}
+            hardwareAccelerated={true}
+            onRequestClose={() => setShowModal(false)}
+        >
+            <View style={styles.modalStylesExternal}>
+                <View style={[styles.modalStyles, modalStyles]}>
+                    {defaultComponent}
+
+                    <TouchableOpacity
+                        onPress={() => setShowModal(false)}
+                        style={{ alignSelf: "center" }}
+                    >
+                        <Text style={[{ fontFamily }, styles.closeBtn]}>{closeText}</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </Modal>
+    );
 };
 
 export default MultipleSelectList;
@@ -465,5 +496,26 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: "whitesmoke",
+    },
+    modalStylesExternal: {
+        flex: 1,
+        backgroundColor: "#000000B2",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    modalStyles: {
+        backgroundColor: "#fff",
+        width: "90%",
+        padding: 20,
+        borderWidth: 1,
+        borderColor: "#000",
+        borderRadius: 16,
+    },
+    closeBtn: {
+        backgroundColor: "#424242",
+        borderRadius: 1000,
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        color: "#fff",
     },
 });
