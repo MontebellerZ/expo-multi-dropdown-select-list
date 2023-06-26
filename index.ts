@@ -1,4 +1,3 @@
-import SelectList from './components/SelectList';
-import MultipleSelectList from './components/MultipleSelectList'; 
-export { SelectList, MultipleSelectList }; 
-
+import SelectList from "./components/SelectList";
+import MultiSelectList from "./components/MultiSelectList";
+export { SelectList, MultiSelectList };
