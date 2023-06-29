@@ -12,6 +12,7 @@ import {
 import { IOptionLabel, MultiSelectListProps } from "../..";
 import { AntDesign } from "@expo/vector-icons";
 import styles from "./styles";
+import removeAccent from "../../utils/removeAccent";
 
 const MAX_OPTIONS_LENGTH = 100;
 const MIN_SEARCH_LENGTH = 3;
@@ -106,6 +107,12 @@ function MultiSelectList({
     const shouldSearch: boolean =
         options.length > MAX_OPTIONS_LENGTH && search.length < MIN_SEARCH_LENGTH;
 
+    const searchResults = options.filter((opt) => {
+        const str1 = removeAccent(opt.label);
+        const str2 = removeAccent(search);
+        return str1.includes(str2);
+    });
+
     return (
         <View>
             <TouchableOpacity style={[styles.openButton, openButtonStyle]} onPress={handleOpen}>
@@ -140,7 +147,7 @@ function MultiSelectList({
                                 style={styles.flatlist}
                                 contentContainerStyle={styles.flatlistContainer}
                                 keyExtractor={(item) => item.value}
-                                data={options.filter((opt) => opt.label.includes(search))}
+                                data={searchResults}
                                 renderItem={({ item }) => {
                                     const checked = selected.includes(item.value);
 

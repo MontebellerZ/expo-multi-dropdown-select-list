@@ -1,6 +1,6 @@
 {
   "name": "expo-modal-dropdown",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "React Native Select List",
   "main": "index.ts",
   "types": "index.d.ts",
