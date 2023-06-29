@@ -12,11 +12,12 @@ interface IOption {
 
 interface DefaultSelectProps {
     options: IOption[];
-    openButtonText?: string;
+    openButtonContent?: string | React.ReactNode;
     openButtonStyle?: ViewStyle;
     openButtonTextStyle?: TextStyle;
-    closeButtonText?: string;
+    closeButtonContent?: string | React.ReactNode;
     closeButtonStyle?: ViewStyle;
+    closeButtonTextStyle?: TextStyle;
     itemStyle?: ViewStyle;
     labelStyle?: TextStyle;
     modalStyle?: ViewStyle;

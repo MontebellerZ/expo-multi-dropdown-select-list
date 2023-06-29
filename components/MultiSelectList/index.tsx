@@ -55,11 +55,12 @@ function MultiSelectList({
     options,
     value,
     onChange,
-    openButtonText = "Select Option",
+    openButtonContent = "Select Option",
     openButtonStyle = {},
     openButtonTextStyle = {},
-    closeButtonText = "Close",
+    closeButtonContent = "Close",
     closeButtonStyle = {},
+    closeButtonTextStyle = {},
     itemStyle = {},
     labelStyle = {},
     modalStyle = {},
@@ -108,7 +109,13 @@ function MultiSelectList({
     return (
         <View>
             <TouchableOpacity style={[styles.openButton, openButtonStyle]} onPress={handleOpen}>
-                <Text style={[styles.openButtonText, openButtonTextStyle]}>{openButtonText}</Text>
+                {typeof openButtonContent === "string" ? (
+                    <Text style={[styles.openButtonText, openButtonTextStyle]}>
+                        {openButtonContent}
+                    </Text>
+                ) : (
+                    openButtonContent
+                )}
             </TouchableOpacity>
 
             <Modal
@@ -182,7 +189,13 @@ function MultiSelectList({
                             onPress={handleClose}
                             style={[styles.closeBtn, closeButtonStyle]}
                         >
-                            <Text style={styles.closeBtnText}>{closeButtonText}</Text>
+                            {typeof closeButtonContent === "string" ? (
+                                <Text style={[styles.closeBtnText, closeButtonTextStyle]}>
+                                    {closeButtonContent}
+                                </Text>
+                            ) : (
+                                closeButtonContent
+                            )}
                         </TouchableOpacity>
                     </View>
                 </View>
