@@ -1,8 +1,20 @@
-import React, { useMemo, useState } from "react";
-import { FlatList, Modal, Text, TextInput, TouchableOpacity, View, ViewStyle } from "react-native";
+import React, { useState } from "react";
+import {
+    FlatList,
+    Modal,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+    ViewStyle,
+    ScrollView,
+} from "react-native";
 import { IOptionLabel, MultiSelectListProps } from "../..";
 import { AntDesign } from "@expo/vector-icons";
 import styles from "./styles";
+
+const MAX_OPTIONS_LENGTH = 100;
+const MIN_SEARCH_LENGTH = 3;
 
 function ShowIcon({ marked }: { marked: boolean }) {
     return marked ? (
@@ -26,16 +38,13 @@ function MultiSelectItem({
     itemStyle = {},
     labelStyle = {},
 }: IMultiSelectItem) {
-    const [marked, setMarked] = useState(checked);
-
     const handleSelect = () => {
-        onPress(!marked);
-        setMarked(!marked);
+        onPress(!checked);
     };
 
     return (
         <TouchableOpacity style={[styles.itemStyle, itemStyle]} onPress={handleSelect}>
-            <ShowIcon marked={marked} />
+            <ShowIcon marked={checked} />
 
             <Text style={[styles.labelStyle, labelStyle]}>{label}</Text>
         </TouchableOpacity>
@@ -57,6 +66,7 @@ function MultiSelectList({
     selectedText = "Selected",
     selectedValueStyle = {},
     placeholder = "Search",
+    searchRequiredText = "Insert at least 3 characters in search field",
 }: MultiSelectListProps) {
     const [showModal, setShowModal] = useState<boolean>(false);
     const [search, setSearch] = useState("");
@@ -74,6 +84,26 @@ function MultiSelectList({
     const handleOpen = () => {
         setShowModal(true);
     };
+
+    const handleRemoveSelected = (position: number) => {
+        setSelected((selected) => {
+            const copySelected: typeof selected = JSON.parse(JSON.stringify(selected));
+            copySelected.splice(position, 1);
+            return copySelected;
+        });
+    };
+
+    const handleAddSelected = (value: any) => {
+        setSelected((selected) => {
+            const copySelected: typeof selected = JSON.parse(JSON.stringify(selected));
+            copySelected.push(value);
+            copySelected.sort();
+            return copySelected;
+        });
+    };
+
+    const shouldSearch: boolean =
+        options.length > MAX_OPTIONS_LENGTH && search.length < MIN_SEARCH_LENGTH;
 
     return (
         <View>
@@ -96,39 +126,38 @@ function MultiSelectList({
                             style={styles.search}
                         />
 
-                        <FlatList
-                            style={styles.flatlist}
-                            contentContainerStyle={styles.flatlistContainer}
-                            data={options.filter((opt) => opt.label.includes(search))}
-                            keyExtractor={(item) => item.value}
-                            renderItem={({ item, index }) => {
-                                const checked = selected.includes(item.value);
+                        {shouldSearch ? (
+                            <Text style={[styles.flatlistShouldSearch]}>{searchRequiredText}</Text>
+                        ) : (
+                            <FlatList
+                                style={styles.flatlist}
+                                contentContainerStyle={styles.flatlistContainer}
+                                keyExtractor={(item) => item.value}
+                                data={options.filter((opt) => opt.label.includes(search))}
+                                renderItem={({ item }) => {
+                                    const checked = selected.includes(item.value);
 
-                                const onPress = () => {
-                                    setSelected((selected) => {
-                                        let copySelected: any[] = JSON.parse(
-                                            JSON.stringify(selected)
+                                    const onPress = (marked: boolean) => {
+                                        if (marked) return handleAddSelected(item.value);
+
+                                        const findValue = selected.findIndex(
+                                            (sel) => sel === item.value
                                         );
+                                        return handleRemoveSelected(findValue);
+                                    };
 
-                                        copySelected.includes(item.value)
-                                            ? copySelected.splice(index, 1)
-                                            : copySelected.push(item.value);
-
-                                        return copySelected;
-                                    });
-                                };
-
-                                return (
-                                    <MultiSelectItem
-                                        label={item.label}
-                                        checked={checked}
-                                        onPress={onPress}
-                                        itemStyle={itemStyle}
-                                        labelStyle={labelStyle}
-                                    />
-                                );
-                            }}
-                        />
+                                    return (
+                                        <MultiSelectItem
+                                            label={item.label}
+                                            checked={checked}
+                                            onPress={onPress}
+                                            itemStyle={itemStyle}
+                                            labelStyle={labelStyle}
+                                        />
+                                    );
+                                }}
+                            />
+                        )}
 
                         <View style={styles.selectedView}>
                             <Text style={styles.selectedViewText}>{selectedText}</Text>
@@ -136,11 +165,18 @@ function MultiSelectList({
                             <View style={styles.barStyle} />
                         </View>
 
-                        <View style={styles.selectedView2}>
-                            {selected.map((val) => (
-                                <Text style={[styles.selectedVal, selectedValueStyle]}>{val}</Text>
+                        <ScrollView
+                            style={styles.scrollView}
+                            contentContainerStyle={styles.scrollViewContainer}
+                        >
+                            {selected.map((val, i) => (
+                                <TouchableOpacity key={i} onPress={() => handleRemoveSelected(i)}>
+                                    <Text style={[styles.selectedVal, selectedValueStyle]}>
+                                        {val}
+                                    </Text>
+                                </TouchableOpacity>
                             ))}
-                        </View>
+                        </ScrollView>
 
                         <TouchableOpacity
                             onPress={handleClose}

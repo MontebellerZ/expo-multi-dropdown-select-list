@@ -22,6 +22,7 @@ interface DefaultSelectProps {
     modalStyle?: ViewStyle;
     selectedText?: string;
     placeholder?: string;
+    searchRequiredText?: string;
 }
 
 export interface SelectListProps extends DefaultSelectProps {

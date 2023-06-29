@@ -41,6 +41,16 @@ export default StyleSheet.create({
         borderRadius: 10,
     },
     flatlistContainer: {},
+    flatlistShouldSearch: {
+        flex: 1,
+        borderWidth: 1,
+        borderColor: "#222",
+        borderRadius: 10,
+        padding: 10,
+        alignItems: "center",
+        justifyContent: "center",
+        textAlign: "center",
+    },
     itemStyle: {
         paddingVertical: 8,
         paddingHorizontal: 4,
@@ -48,6 +58,7 @@ export default StyleSheet.create({
         gap: 8,
         alignItems: "center",
         justifyContent: "flex-start",
+        alignSelf: "stretch",
     },
     iconStyle: {
         color: "#000",
@@ -69,14 +80,19 @@ export default StyleSheet.create({
         color: "#000",
         fontSize: 16,
     },
-    selectedView2: {
+    scrollView: {
+        flex: 0,
+        flexGrow: 0,
+        maxHeight: 140,
+    },
+    scrollViewContainer: {
         flexDirection: "row",
         flexWrap: "wrap",
         gap: 8,
     },
     selectedVal: {
         borderRadius: 1000,
-        backgroundColor: "#444",
+        backgroundColor: "#777",
         color: "#fff",
         paddingHorizontal: 12,
         paddingVertical: 6,
