@@ -21,6 +21,7 @@ interface DefaultSelectProps {
     itemStyle?: ViewStyle;
     labelStyle?: TextStyle;
     modalStyle?: ViewStyle;
+    selectedValueStyle?: TextStyle;
     selectedText?: string;
     placeholder?: string;
     searchRequiredText?: string;
@@ -34,7 +35,6 @@ export interface SelectListProps extends DefaultSelectProps {
 export interface MultiSelectListProps extends DefaultSelectProps {
     value: IOptionValue[];
     onChange: (value: IOptionValue[]) => any;
-    selectedValueStyle?: TextStyle;
 }
 
 declare class MultiSelectList extends React.Component<MultiSelectListProps> {}
